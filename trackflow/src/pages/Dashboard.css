@@ -1,0 +1,212 @@
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main container */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  font-family: 'Inter', sans-serif;
+  background: #f1f5f9;
+  color: #1a1a1a;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  min-width: 220px;
+  background: #ffffff;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  color: #2f80ed;
+  margin-bottom: 24px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar a {
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: #334155;
+}
+
+.sidebar a:hover {
+  color: #1d4ed8;
+}
+
+.logout {
+  margin-top: auto;
+  color: #ef4444;
+  font-weight: 600;
+  cursor: pointer;
+  padding-top: 1.5rem;
+}
+
+/* Main Content */
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+/* Stat Cards */
+.stats-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-card {
+  flex: 1 1 180px;
+  min-width: 140px;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.stat-card h3 {
+  font-size: 1.4rem;
+  color: #1d4ed8;
+}
+
+.stat-card p {
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.new-order-btn {
+  background: #3b82f6;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.new-order-btn:hover {
+  background: #2563eb;
+}
+
+/* Orders section */
+.orders-section {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  overflow-x: auto;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 280px;
+  margin-bottom: 16px;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.orders-table th {
+  text-align: left;
+  padding: 12px;
+  background: #f8fafc;
+  font-weight: 600;
+  color: #334155;
+}
+
+.orders-table td {
+  padding: 12px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+}
+
+/* Status Tags */
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status.in-progress {
+  background: #fef9c3;
+  color: #b45309;
+}
+
+.status.shipped {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status.open {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .sidebar nav {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .dashboard-main {
+    padding: 16px;
+  }
+
+  .stats-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .new-order-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
