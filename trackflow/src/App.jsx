@@ -5,7 +5,7 @@ import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import Home from './pages/Home';
-import Signup from './pages/SignUp';
+import Signup from './pages/SignUp'; // ✅ updated to match your file structure
 import Login from './pages/Login';
 
 import Dashboard from './pages/Dashboard';
@@ -30,12 +30,12 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Public Pages */}
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Protected Pages with Layout */}
+        {/* Protected Routes wrapped in Layout */}
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/member-dashboard" element={<ProtectedRoute><MemberDashboard /></ProtectedRoute>} />
@@ -56,7 +56,7 @@ const App = () => {
           <Route path="/help" element={<ProtectedRoute><HelpCenter /></ProtectedRoute>} />
         </Route>
 
-        {/* Fallback */}
+        {/* Catch-all redirect to Home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
