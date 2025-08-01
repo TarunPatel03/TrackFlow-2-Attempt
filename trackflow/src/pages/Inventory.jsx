@@ -1,62 +1,83 @@
-// /src/pages/Inventory.jsx
 import React, { useEffect, useState } from 'react';
-import './Inventory.css';
 import { supabase } from '../lib/supabaseClient';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
+import './Inventory.css';
 
 const Inventory = () => {
   const [items, setItems] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchInventory = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session?.user) return;
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', session.user.id)
+        .single();
+
+      if (profile?.role === 'admin') setIsAdmin(true);
+
+      const { data, error } = await supabase
+        .from('items')
+        .select('*')
+        .order('last_updated', { ascending: false });
+
+      if (error) {
+        console.error('Error loading inventory:', error.message);
+      } else {
+        setItems(data || []);
+      }
+
+      setLoading(false);
+    };
+
     fetchInventory();
   }, []);
 
-  const fetchInventory = async () => {
-    const { data, error } = await supabase
-      .from('items')
-      .select('*')
-      .order('name', { ascending: true });
-
-    if (error) console.error('Error fetching inventory:', error);
-    else setItems(data);
-  };
+  if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="inventory-page">
-      <Sidebar />
-      <main className="inventory-main">
-        <h1>Inventory</h1>
-        <div className="inventory-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>SKU</th>
-                <th>Quantity</th>
-                <th>Location</th>
-                <th>Last Updated</th>
+    <>
+      <Navbar />
+      <div className="inventory-page">
+        <h1>📁 Inventory</h1>
+        <table className="inventory-table">
+          <thead>
+            <tr>
+              <th>Item ID</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Stock</th>
+              <th>Last Updated</th>
+              {isAdmin && <th>Actions</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.item_id}>
+                <td>{item.item_id}</td>
+                <td>{item.name}</td>
+                <td>{item.category}</td>
+                <td>{item.stock_quantity}</td>
+                <td>
+                  {item.last_updated
+                    ? new Date(item.last_updated).toLocaleDateString()
+                    : '—'}
+                </td>
+                {isAdmin && <td>✏️</td>}
               </tr>
-            </thead>
-            <tbody>
-              {items.map(item => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
-                  <td>{item.sku}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.location}</td>
-                  <td>{new Date(item.updated_at).toLocaleDateString()}</td>
-                </tr>
-              ))}
-              {items.length === 0 && (
-                <tr>
-                  <td colSpan="5">No items found.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </main>
-    </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

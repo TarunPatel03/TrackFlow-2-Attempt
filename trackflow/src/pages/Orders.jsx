@@ -1,62 +1,87 @@
-// /src/pages/Orders.jsx
 import React, { useEffect, useState } from 'react';
-import './Orders.css';
 import { supabase } from '../lib/supabaseClient';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
+import './Orders.css';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    const fetchOrders = async () => {
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
+      if (sessionError || !session?.user) {
+        console.error('No session found');
+        return;
+      }
+
+      const { user } = session;
+
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+
+      if (profile?.role === 'admin') setIsAdmin(true);
+
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching orders:', error.message);
+      } else {
+        setOrders(data || []);
+      }
+
+      setLoading(false);
+    };
+
     fetchOrders();
   }, []);
 
-  const fetchOrders = async () => {
-    const { data, error } = await supabase
-      .from('orders')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) console.error('Error fetching orders:', error);
-    else setOrders(data);
-  };
+  if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="orders-page">
-      <Sidebar />
-      <main className="orders-main">
-        <h1>Orders</h1>
-        <div className="orders-table">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Company</th>
-                <th>Status</th>
-                <th>Amount</th>
-                <th>Date</th>
+    <>
+      <Navbar />
+      <div className="orders-page">
+        <h1>📦 All Orders</h1>
+        <table className="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Status</th>
+              <th>Item Name</th>
+              <th>Last Updated</th>
+              {isAdmin && <th>Actions</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order.order_id}>
+                <td>{order.order_id}</td>
+                <td>{order.status}</td>
+                <td>{order.item_name}</td>
+                <td>
+                  {order.last_updated
+                    ? new Date(order.last_updated).toLocaleString()
+                    : '—'}
+                </td>
+                {isAdmin && <td>✏️</td>}
               </tr>
-            </thead>
-            <tbody>
-              {orders.map(order => (
-                <tr key={order.id}>
-                  <td>{order.id}</td>
-                  <td>{order.company}</td>
-                  <td>{order.status}</td>
-                  <td>${order.amount}</td>
-                  <td>{new Date(order.created_at).toLocaleDateString()}</td>
-                </tr>
-              ))}
-              {orders.length === 0 && (
-                <tr>
-                  <td colSpan="5">No orders found.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </main>
-    </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
