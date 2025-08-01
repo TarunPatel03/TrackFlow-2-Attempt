@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import './Signup.css';
 import Navbar from '../components/Navbar';
-import FormField from '../components/Formfield'; // ✅ fixed casing
+import FormField from '../components/Formfield';
 
 const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -23,12 +23,15 @@ const Signup = () => {
 
     const { email, password } = formData;
 
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
     if (error) {
       setError(error.message);
     } else {
-      alert('Check your email for verification link');
+      alert('Check your email for a verification link.');
       navigate('/login');
     }
   };

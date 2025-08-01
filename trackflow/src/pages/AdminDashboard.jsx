@@ -1,23 +1,54 @@
-// /src/pages/AdminDashboard.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
+import Navbar from '../components/Navbar';
 import './AdminDashboard.css';
-import Sidebar from '../components/Sidebar';
-import Card from '../components/Card';
 
 const AdminDashboard = () => {
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadAdminData = async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+
+      if (!sessionData?.session?.user) {
+        navigate('/login');
+        return;
+      }
+
+      setUser(sessionData.session.user);
+
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', sessionData.session.user.id)
+        .single();
+
+      if (error || !profile || profile.role !== 'admin') {
+        navigate('/dashboard');
+      } else {
+        setRole(profile.role);
+      }
+    };
+
+    loadAdminData();
+  }, [navigate]);
+
   return (
-    <div className="admin-dashboard">
-      <Sidebar />
-      <main className="admin-main">
-        <h1>Admin Dashboard</h1>
-        <div className="card-grid">
-          <Card title="Total Members" value="147" />
-          <Card title="Upcoming Events" value="5 Scheduled" />
-          <Card title="Payments Received" value="$12,340" />
-          <Card title="Active Users" value="38 Online" />
+    <>
+      <Navbar />
+      <div className="admin-dashboard-page">
+        <h1>🛠️ Admin Dashboard</h1>
+        <p>Welcome, {user?.email}</p>
+        <p>Your role: {role}</p>
+        <div className="admin-tools">
+          <p>Use this dashboard to manage users, orders, and app settings.</p>
+          {/* You can add admin widgets here */}
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 };
 
