@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const [session, setSession] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,101 +23,155 @@ const Dashboard = () => {
       }
 
       setSession(session);
+      await fetchProfileRole(session.user.id);
+      await fetchOrders();
     };
 
     init();
   }, []);
+
+  const fetchProfileRole = async (userId) => {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .single();
+
+    if (!error && data?.role === "admin") {
+      setIsAdmin(true);
+    }
+  };
+
+  const fetchOrders = async () => {
+    const { data, error } = await supabase
+      .from("orders")
+      .select("order_id, status, item_name, last_updated")
+      .order("last_updated", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching orders:", error.message);
+    } else {
+      setOrders(data || []);
+    }
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate("/");
   };
 
-  if (!session) {
-    return <div className="dashboard-main">Not authorized</div>;
-  }
+  const filteredOrders = orders.filter((order) => {
+    const matchesSearch = order.item_name
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+    const matchesStatus = filterStatus
+      ? order.status?.toLowerCase() === filterStatus.toLowerCase()
+      : true;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="dashboard-container">
-      {/* Sidebar */}
       <aside className="sidebar">
         <h2>📦 TrackFlow</h2>
         <nav>
-          <a href="/dashboard">📊 Dashboard</a>
-          <a href="/orders">📦 Orders</a>
-          <a href="/inventory">📁 Inventory</a>
-          <a href="/reports">📈 Reports</a>
-          <a href="/settings">⚙️ Settings</a>
+          <Link to="/dashboard">📊 Dashboard</Link>
+          <Link to="/orders">📦 Orders</Link>
+          <Link to="/inventory">📁 Inventory</Link>
+          <Link to="/settings">⚙️ Settings</Link>
         </nav>
         <div className="logout" onClick={handleLogout}>
           🔓 Logout
         </div>
       </aside>
 
-      {/* Main Panel */}
       <main className="dashboard-main">
         <header className="stats-header">
           <div className="stat-card">
-            <h3>32</h3>
-            <p>Open Orders</p>
-          </div>
-          <div className="stat-card">
-            <h3>5</h3>
-            <p>Orders in Progress</p>
-          </div>
-          <div className="stat-card">
-            <h3>210</h3>
-            <p>Shipped Others</p>
-          </div>
-          <div className="stat-card">
-            <h3>8,320</h3>
+            <h3>{orders.length}</h3>
             <p>Total Orders</p>
           </div>
-          <button className="new-order-btn">+ New Order</button>
+          <div className="stat-card">
+            <h3>
+              {
+                orders.filter((o) =>
+                  ["open", "in progress", "pending"].includes(
+                    o.status?.toLowerCase()
+                  )
+                ).length
+              }
+            </h3>
+            <p>Active Orders</p>
+          </div>
+          <div className="stat-card">
+            <h3>
+              {
+                orders.filter((o) =>
+                  o.status?.toLowerCase().includes("shipped")
+                ).length
+              }
+            </h3>
+            <p>Shipped</p>
+          </div>
+          {isAdmin && (
+            <button className="new-order-btn">+ New Order</button>
+          )}
         </header>
 
         <div className="orders-section">
-          <input className="search-input" placeholder="🔍 Search..." />
+          <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+            <input
+              className="search-input"
+              placeholder="🔍 Search item name..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <select
+              className="search-input"
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+            >
+              <option value="">All Statuses</option>
+              {[...new Set(orders.map((o) => o.status))].map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <table className="orders-table">
             <thead>
               <tr>
                 <th>Order ID</th>
                 <th>Status</th>
-                <th>Customer</th>
-                <th>Date</th>
+                <th>Item</th>
+                <th>Last Updated</th>
                 <th>Amount</th>
-                <th>Actions</th>
+                {isAdmin && <th>Actions</th>}
               </tr>
             </thead>
             <tbody>
-              {[
-                {
-                  id: 1001,
-                  status: "In Progress",
-                  customer: "Acme Corp",
-                  date: "Mar 3, 2024",
-                  amount: "$24,500.00",
-                },
-                {
-                  id: 1002,
-                  status: "Shipped",
-                  customer: "Globex Corp",
-                  date: "Mar 23, 2024",
-                  amount: "$12,500.00",
-                },
-              ].map((order) => (
-                <tr key={order.id}>
-                  <td>{order.id}</td>
+              {filteredOrders.map((order) => (
+                <tr key={order.order_id}>
+                  <td>{order.order_id}</td>
                   <td>
-                    <span className={`status ${order.status.toLowerCase().replace(" ", "-")}`}>
+                    <span
+                      className={`status ${order.status
+                        ?.toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                    >
                       {order.status}
                     </span>
                   </td>
-                  <td>{order.customer}</td>
-                  <td>{order.date}</td>
-                  <td>{order.amount}</td>
-                  <td>✏️</td>
+                  <td>{order.item_name}</td>
+                  <td>
+                    {order.last_updated
+                      ? new Date(order.last_updated).toLocaleDateString()
+                      : "—"}
+                  </td>
+                  <td>—</td>
+                  {isAdmin && <td>✏️</td>}
                 </tr>
               ))}
             </tbody>
