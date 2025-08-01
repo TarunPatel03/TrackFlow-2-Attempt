@@ -1,23 +1,23 @@
-/* /src/pages/Inventory.css */
-.inventory-page {
+/* /src/pages/Orders.css */
+.orders-page {
     display: flex;
-    background-color: #f9fafb;
+    background-color: #f3f4f6;
     min-height: 100vh;
   }
   
-  .inventory-main {
+  .orders-main {
     flex: 1;
     padding: 2rem;
     margin-left: 240px;
   }
   
-  .inventory-main h1 {
+  .orders-main h1 {
     font-size: 2rem;
     margin-bottom: 1.5rem;
-    color: #111827;
+    color: #1f2937;
   }
   
-  .inventory-table table {
+  .orders-table table {
     width: 100%;
     border-collapse: collapse;
     background: white;
@@ -26,24 +26,24 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   }
   
-  .inventory-table th,
-  .inventory-table td {
+  .orders-table th,
+  .orders-table td {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid #e5e7eb;
   }
   
-  .inventory-table th {
-    background-color: #f1f5f9;
+  .orders-table th {
+    background-color: #f9fafb;
     font-weight: 600;
     color: #374151;
   }
   
-  .inventory-table tr:hover {
-    background-color: #f9fafb;
+  .orders-table tr:hover {
+    background-color: #f1f5f9;
   }
   
-  .inventory-table td {
+  .orders-table td {
     color: #1f2937;
   }
   

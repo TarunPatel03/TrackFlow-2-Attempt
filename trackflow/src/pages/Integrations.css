@@ -1,0 +1,52 @@
+/* /src/pages/Integrations.css */
+.integrations-page {
+    display: flex;
+    background-color: #f9fafb;
+    min-height: 100vh;
+  }
+  
+  .integrations-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px;
+  }
+  
+  .integrations-main h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+  
+  .integration-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .integration-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .integration-card h2 {
+    margin-bottom: 0.5rem;
+    color: #111827;
+  }
+  
+  .integration-card p {
+    color: #4b5563;
+    margin-bottom: 1rem;
+  }
+  
+  .integration-card button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  

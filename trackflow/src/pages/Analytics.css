@@ -1,0 +1,36 @@
+/* /src/pages/Analytics.css */
+.analytics-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+  }
+  
+  .analytics-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px;
+  }
+  
+  .analytics-main h1 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .chart-placeholder {
+    padding: 2rem;
+    border-radius: 1rem;
+    background: white;
+    text-align: center;
+    color: #6b7280;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+  

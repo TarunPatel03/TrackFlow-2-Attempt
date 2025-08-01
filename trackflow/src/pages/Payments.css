@@ -1,0 +1,68 @@
+/* /src/pages/Payments.css */
+.payments-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9fafb;
+  }
+  
+  .payments-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px;
+  }
+  
+  .payments-main h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+  
+  .payments-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .payments-table th,
+  .payments-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .payments-table th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .payments-table tr:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .status {
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+  }
+  
+  .status.paid {
+    background-color: #dcfce7;
+    color: #16a34a;
+  }
+  
+  .status.pending {
+    background-color: #fef3c7;
+    color: #b45309;
+  }
+  
+  .status.failed {
+    background-color: #fee2e2;
+    color: #dc2626;
+  }
+  

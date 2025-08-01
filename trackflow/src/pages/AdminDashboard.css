@@ -1,0 +1,25 @@
+/* /src/pages/AdminDashboard.css */
+.admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9fafb;
+  }
+  
+  .admin-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px; /* matches Sidebar width */
+  }
+  
+  .admin-main h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #111827;
+  }
+  
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  

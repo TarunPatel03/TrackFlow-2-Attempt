@@ -1,0 +1,42 @@
+/* /src/pages/Events.css */
+.events-page {
+    display: flex;
+    background-color: #f3f4f6;
+    min-height: 100vh;
+  }
+  
+  .events-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px;
+  }
+  
+  .events-main h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+  
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .event-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .event-card h2 {
+    margin-bottom: 0.5rem;
+    color: #1e40af;
+  }
+  
+  .event-card p {
+    margin: 0.25rem 0;
+    color: #374151;
+  }
+  

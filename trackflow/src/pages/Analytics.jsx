@@ -1,30 +1,51 @@
-
+// /src/pages/Analytics.jsx
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import './Analytics.css';
+import Sidebar from '../components/Sidebar';
+import Card from '../components/Card';
 
 const Analytics = () => {
-  const [count, setCount] = useState(null);
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    totalRevenue: 0,
+    totalMembers: 0,
+    activeItems: 0,
+  });
 
   useEffect(() => {
-    const fetchOrderCount = async () => {
-      const { count, error } = await supabase
-        .from('orders')
-        .select('*', { count: 'exact', head: true });
-
-      if (error) {
-        console.error('Error fetching analytics:', error);
-      } else {
-        setCount(count);
-      }
-    };
-
-    fetchOrderCount();
+    fetchAnalytics();
   }, []);
 
+  const fetchAnalytics = async () => {
+    try {
+      // Simulated/fake stats — replace with Supabase queries
+      setStats({
+        totalOrders: 248,
+        totalRevenue: 18240,
+        totalMembers: 112,
+        activeItems: 91,
+      });
+    } catch (error) {
+      console.error('Error fetching analytics:', error);
+    }
+  };
+
   return (
-    <div className="page">
-      <h2>Analytics Page</h2>
-      <p>Total orders: {count !== null ? count : 'Loading...'}</p>
+    <div className="analytics-page">
+      <Sidebar />
+      <main className="analytics-main">
+        <h1>Analytics</h1>
+        <div className="analytics-grid">
+          <Card title="Total Orders" value={stats.totalOrders} />
+          <Card title="Total Revenue" value={`$${stats.totalRevenue.toLocaleString()}`} />
+          <Card title="Total Members" value={stats.totalMembers} />
+          <Card title="Active Inventory Items" value={stats.activeItems} />
+        </div>
+
+        <div className="chart-placeholder">
+          <p>📊 Charts coming soon — bar, pie, line, etc.</p>
+        </div>
+      </main>
     </div>
   );
 };

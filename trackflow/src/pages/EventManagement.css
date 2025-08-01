@@ -1,0 +1,75 @@
+/* /src/pages/EventManagement.css */
+.event-management-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9fafb;
+  }
+  
+  .event-management-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px;
+  }
+  
+  .event-management-main h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+  
+  .event-form {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .create-btn {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    cursor: pointer;
+  }
+  
+  .create-btn:hover {
+    background-color: #2563eb;
+  }
+  
+  .feedback-msg {
+    margin-top: 1rem;
+    color: #10b981;
+    font-weight: 500;
+  }
+  
+  .event-table table {
+    width: 100%;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    border-collapse: collapse;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .event-table th,
+  .event-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .event-table th {
+    background-color: #f3f4f6;
+    color: #374151;
+    font-weight: 600;
+  }
+  
+  .event-table tr:hover {
+    background-color: #f1f5f9;
+  }
+  

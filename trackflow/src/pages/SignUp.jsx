@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
-import './Login.css';
+import './Signup.css';
 import Navbar from '../components/Navbar';
-import FormField from '../components/Formfield'; // ✅ Correct casing
+import FormField from '../components/Formfield'; // ✅ fixed casing
 
-const Login = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -23,21 +23,22 @@ const Login = () => {
 
     const { email, password } = formData;
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       setError(error.message);
     } else {
-      navigate('/dashboard');
+      alert('Check your email for verification link');
+      navigate('/login');
     }
   };
 
   return (
     <>
       <Navbar />
-      <div className="login-page">
-        <div className="login-box">
-          <h2>Welcome Back</h2>
+      <div className="signup-page">
+        <div className="signup-box">
+          <h2>Create Account</h2>
           <form onSubmit={handleSubmit}>
             <FormField
               label="Email"
@@ -58,13 +59,15 @@ const Login = () => {
               required
             />
             {error && <p className="error-msg">{error}</p>}
-            <button type="submit" className="login-btn">Log In</button>
+            <button type="submit" className="signup-btn">Sign Up</button>
           </form>
-          <p className="switch-link">Don't have an account? <Link to="/signup">Sign up</Link></p>
+          <p className="switch-link">
+            Already have an account? <Link to="/login">Log in</Link>
+          </p>
         </div>
       </div>
     </>
   );
 };
 
-export default Login;
+export default Signup;

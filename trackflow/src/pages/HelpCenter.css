@@ -1,0 +1,47 @@
+/* /src/pages/HelpCenter.css */
+.help-center-page {
+    display: flex;
+    background-color: #f9fafb;
+    min-height: 100vh;
+  }
+  
+  .help-center-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px;
+  }
+  
+  .help-center-main h1 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  
+  .faq h2 {
+    font-size: 1.25rem;
+    color: #374151;
+    margin-bottom: 1rem;
+  }
+  
+  .faq ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .faq li {
+    background: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 0 1px #e5e7eb;
+  }
+  
+  .faq li strong {
+    color: #111827;
+  }
+  
+  .faq a {
+    color: #3b82f6;
+    text-decoration: none;
+  }
+  

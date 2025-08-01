@@ -1,0 +1,49 @@
+/* /src/pages/MemberManagement.css */
+.member-management-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+  }
+  
+  .member-management-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px;
+  }
+  
+  .member-management-main h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+  
+  .members-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .members-table th,
+  .members-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .members-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .members-table tr:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .members-table td {
+    color: #1f2937;
+  }
+  

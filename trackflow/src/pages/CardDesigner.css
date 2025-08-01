@@ -1,0 +1,75 @@
+/* /src/pages/CardDesigner.css */
+.card-designer-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9fafb;
+  }
+  
+  .card-designer-main {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px;
+  }
+  
+  .card-designer-main h1 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-form {
+    max-width: 500px;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .color-picker {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  
+  .save-btn {
+    margin-top: 1.5rem;
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .save-btn:hover {
+    background-color: #2563eb;
+  }
+  
+  .preview-label {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #374151;
+  }
+  
+  .card-preview {
+    max-width: 500px;
+    padding: 1.5rem;
+    border: 2px solid;
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: 0 0 0 1px #e5e7eb;
+  }
+  
+  .card-preview h2 {
+    margin-bottom: 0.25rem;
+  }
+  
+  .card-preview p {
+    margin: 0.25rem 0;
+    color: #4b5563;
+  }
+  
