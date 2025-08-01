@@ -5,7 +5,7 @@ import './Signup.css';
 import Navbar from '../components/Navbar';
 import FormField from '../components/Formfield';
 
-const Signup = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
