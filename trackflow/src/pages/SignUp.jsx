@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
-import './Signup.css';
+import './SignUp.css';
 import Navbar from '../components/Navbar';
 import FormField from '../components/Formfield';
 
