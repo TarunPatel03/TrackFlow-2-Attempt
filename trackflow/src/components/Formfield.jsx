@@ -1,6 +1,6 @@
 // /src/components/FormField.jsx
 import React from 'react';
-import './FormField.css';
+import './Formfield.css';
 
 const FormField = ({ label, type = 'text', name, value, onChange, placeholder, required = false }) => {
   return (
